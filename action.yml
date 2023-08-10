@@ -25,6 +25,7 @@ runs:
     - name: Install pnpm
       run: |
         npm install -g pnpm@${{ inputs.pnpm-version }}
+      shell: bash
     
     - name: Get pnpm store directory
       id: pnpm-cache
@@ -40,6 +41,7 @@ runs:
         restore-keys: |
           ${{ runner.os }}-pnpm-store-
         
-     - name: Install dependencies
+    - name: Install dependencies
        run: pnpm install
+       shell: bash
    
