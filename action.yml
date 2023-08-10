@@ -1,16 +1,14 @@
 name: Setup Node.js and pnpm
 description: Set up Node.js and pnpm environment
-
 inputs:
   node-version:
-    description: "Node.js version to install"
+    description: Node.js version to install
     required: true
-    default: "14.x"
+    default: 14.x
   pnpm-version:
-    description: "pnpm version to install"
+    description: pnpm version to install
     required: true
-    default: "latest"
-
+    default: latest
 runs:
   using: composite
   steps:
@@ -21,18 +19,18 @@ runs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ inputs.node-version }}
-
+        
     - name: Install pnpm
       run: |
         npm install -g pnpm@${{ inputs.pnpm-version }}
       shell: bash
-    
+      
     - name: Get pnpm store directory
       id: pnpm-cache
       shell: bash
       run: |
         echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_ENV
-
+        
     - uses: actions/cache@v2
       name: Setup pnpm cache
       with:
@@ -40,8 +38,7 @@ runs:
         key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
         restore-keys: |
           ${{ runner.os }}-pnpm-store-
-        
+          
     - name: Install dependencies
       run: pnpm install
       shell: bash
-   
